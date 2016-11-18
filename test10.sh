@@ -18,8 +18,8 @@ ${parns}
 EOF
 
 # query the zone records
-childns=$(dig @${child_dns} ns ${1} +short +norec | sort)
-parentns=$(echo ${parentns} | tr ' ' '\n' | sort)
+childns=$(dig @${child_dns} ns ${1} +short +norec | tr "A-Z" "a-z" | sort)
+parentns=$(echo ${parentns} | tr ' ' '\n' | tr "A-Z" "a-z" | sort)
 
 echo "Parent delegation:"
 echo ${parentns}
@@ -30,4 +30,5 @@ if [ "${childns}" == "${parentns}" ]; then
     echo "Parent/Child NS-RRSet matches"
 else
     echo "Parent/Child NS-RRSet mismatch"
+    exit 128
 fi
