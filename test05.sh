@@ -13,7 +13,7 @@ ednspolicy=1232
 
 while read server; do
   printf "Server: ${server} "
-  ednsbuf=$(dig @${server} ${1} | grep "; EDNS:" | cut -d " " -f 7)
+  ednsbuf=$(dig +nocookie @${server} ${1} | grep "; EDNS:" | cut -d " " -f 7)
 
   if [ "${ednsbuf}" -eq "${ednspolicy}" ]; then
     printf " EDNS0-Bufsize is ${ednsbuf}, good\n"
@@ -21,6 +21,6 @@ while read server; do
     err=1
     printf " EDNS0-Bufsize is ${ednsbuf}, out of policy range\n"
   fi
-done <<< "$(dig +short NS $1)"
+done <<< "$(dig +short +nocookie NS $1)"
 
 exit ${err}

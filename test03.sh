@@ -10,7 +10,7 @@ echo " == #3 - TCPv4 reachability == "
 err=0
 
 while read server; do
-  ipaddr=$(dig ${server} A +short)
+  ipaddr=$(dig ${server} A +short +nocookie)
 
   echo "Server: ${server} (${ipaddr})"
   soarec=$(dig -4 @${server} ${1} SOA +cd +tcp)

@@ -10,7 +10,7 @@ echo " == #1 - UDPv4 reachability == "
 err=0
 
 while read server; do
-  ipaddr=$(dig ${server} A +short)
+  ipaddr=$(dig +nocookie ${server} A +short)
 
   echo "Server: ${server} (${ipaddr})"
   soarec=$(dig -4 @${server} ${1} SOA +cd)
