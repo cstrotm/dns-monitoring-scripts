@@ -12,11 +12,11 @@ err=0
 # get TLD for the zone
 tld=$(echo ${1} | rev | cut -d'.' -f 1 | rev)
 # pick one TLD auth server
-tldns=$(dig NS ${1}. +short | tail -1)
+tldns=$(dig NS ${1}. +short +nocookie | tail -1)
 # query and count the delegation NS records for the zone
-parentnsnum=$(dig @${tldns} NS ${1} +short | wc -l)
+parentnsnum=$(dig @${tldns} NS ${1} +short +nocookie | wc -l)
 # query the authoritative DNS servers for the zone
-childnsnum=$(dig -4 ${1} +nssearch +tcp | wc -l)
+childnsnum=$(dig -4 ${1} +nssearch +tcp +nocookie | wc -l)
 
 if [ "${parentnsnum}" -eq "${childnsnum}" ]; then
   echo "all authoritative DNS-Server answer"

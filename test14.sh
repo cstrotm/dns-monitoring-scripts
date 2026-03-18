@@ -4,6 +4,7 @@
 # Test 14 - DS Records and KSK - test that the DS-Record matches the
 # KSK in the zone. The two values (Key-ID) must match.
 #
+# TODO: this test fails on multiple DS records
 
 echo " == #14 - DS Records and KSK == "
 

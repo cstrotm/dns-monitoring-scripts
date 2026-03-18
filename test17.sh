@@ -11,7 +11,7 @@ echo " == #17 - Recursion check == "
 
 err=0
 
-dig NS ${1} +short | while read server; do
+dig NS ${1} +nocookie +short | while read server; do
   printf "Server: ${server} "
 
   if dig ${1} SOA @${server} | awk '/;; flags:/' | grep -q " ra"; then

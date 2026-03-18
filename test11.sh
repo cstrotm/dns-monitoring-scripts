@@ -10,7 +10,7 @@ echo " == #11 - test for DNSKEY RRset answer size == "
 
 err=0
 maxsize=1232
-replysize=$(dig ${1} DNSKEY +dnssec +cd | grep ";; MSG SIZE" | cut -d " " -f 6)
+replysize=$(dig ${1} DNSKEY +nocookie +dnssec +cd | grep ";; MSG SIZE" | cut -d " " -f 6)
 
 if [ "${replysize}" -le "${maxsize}" ]; then
   echo "Good, DNSKEY RRSet size is ${replysize} which is below or equal to ${maxsize}"

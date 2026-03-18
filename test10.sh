@@ -14,13 +14,13 @@ fi
 
 err=0
 # get one authoritative server for the zone
-child_dns=$(dig NS ${1} +short | tail -1)
+child_dns=$(dig NS ${1} +short +nocookie | tail -1)
 # get TLD of Domain
 tld=$(echo ${1} | rev | cut -d'.' -f 1 | rev)
 # get one authoritative server for the TLD
-tldns=$(dig NS ${tld}. +short | tail -1)
+tldns=$(dig NS ${tld}. +short +nocookie | tail -1)
 # query the delegation records
-parns=$(dig @${tldns} NS ${1} +norec +noall +authority | grep "IN.*NS" | sort)
+parns=$(dig @${tldns} NS ${1} +norec +noall +authority +nocookie | grep "IN.*NS" | sort)
 
 while read nsrec; do
   ns=$(echo ${nsrec} | cut -d ' ' -f 5)
@@ -30,7 +30,7 @@ ${parns}
 EOF
 
 # query the zone records
-childns=$(dig @${child_dns} NS ${1} +short +norec | sort)
+childns=$(dig @${child_dns} NS ${1} +short +norec +nocookie | sort)
 parentns=$(echo ${parentns} | tr ' ' '\n' | sort)
 
 echo "Parent delegation:"

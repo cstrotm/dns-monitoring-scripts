@@ -19,6 +19,6 @@ while read server; do
     err=1
     printf " no AA-Flag, Server not authoritative\n"
   fi
-done <<< "$(dig NS $1 +short)"
+done <<< "$(dig NS $1 +short +nocookie)"
 
 exit ${err}

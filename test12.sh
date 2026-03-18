@@ -5,6 +5,8 @@
 # RRSIGs in the zone. This test should be done for every important
 # RRset in the zone (SOA, DNSKEY, MX, A/AAAA)
 #
+# TODO: adapt for BSD date
+# TODO: possibly not POSIX shell compatible
 
 echo " == #12 - RRSIG validity == "
 
@@ -15,8 +17,8 @@ fi
 
 err=0
 today=$(date "+%Y%m%d%H%M%S")
-inception=$(dig ${1} SOA +cd +dnssec | egrep "RRSIG.*SOA" | cut -d " " -f 6)
-expiry=$(dig ${1} SOA +cd +dnssec | egrep "RRSIG.*SOA" | cut -d " " -f 5)
+inception=$(dig ${1} SOA +nocookie +cd +dnssec | egrep "RRSIG.*SOA" | cut -d " " -f 6)
+expiry=$(dig ${1} SOA +nocookie +cd +dnssec | egrep "RRSIG.*SOA" | cut -d " " -f 5)
 
 echo "Today    : ${today}"
 echo "Inception: ${inception}"

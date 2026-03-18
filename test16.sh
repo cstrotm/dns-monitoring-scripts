@@ -12,7 +12,7 @@ echo " == #16 - Delv zone validation == "
 AUTHORITATIVE=""
 
 if [ "$AUTHORITATIVE" = "" ]; then
-  AUTHORITATIVE=$(dig +short ${1} SOA | cut -d' ' -f1)
+  AUTHORITATIVE=$(dig +nocookie +short ${1} SOA | cut -d' ' -f1)
 fi
 
 ZONEDATA=$(dig -t axfr -q ${1} @${AUTHORITATIVE})
@@ -33,7 +33,7 @@ validated=0
     # need to make sure there are only dnssec-capable
     # resolvers in your /etc/resolv.conf. Alternatively
     # add @resolver-ip-address-or-hostname to the below cmd
-    out=$(delv +cdflag +nodnssec +nottl +noclass ${domain} ${rr});
+    out=$(delv +cdflag +nodnssec +nottl +noclass  ${domain} ${rr});
     state=$(echo "${out}" | head -n1);
     if [ "${state}" = "; unsigned answer" ]; then
       printf "Unsigned record: ";
